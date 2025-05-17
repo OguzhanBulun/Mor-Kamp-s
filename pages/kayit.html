@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mor Kampüs – Kayıt Ol</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.12.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 250px;
+            background-color: #410a5d;
+            padding-top: 20px;
+            z-index: 1000;
+        }
+        .sidebar .nav-link {
+            color: white;
+            padding: 10px 20px;
+        }
+        .sidebar .nav-link:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        .sidebar .dropdown-menu {
+            background-color: #410a5d;
+            border: none;
+        }
+        .sidebar .dropdown-item {
+            color: white;
+        }
+        .sidebar .dropdown-item:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        main {
+            margin-left: 250px;
+        }
+        .navbar {
+            margin-left: 250px;
+        }
+        .footer {
+            margin-left: 250px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="text-center mb-4">
+            <img src="../assets/images/logo.png" width="50" height="50" alt="Mor Kampüs Logo">
+            <h4 class="text-white mt-2">MORBİS</h4>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="anasayfa.html">
+                    <i class="bi bi-house-door mr-2"></i>Ana Sayfa
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="hakkimda.html">
+                    <i class="bi bi-info-circle mr-2"></i>Hakkımızda
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                    <i class="bi bi-link-45deg mr-2"></i>Bağlantılar
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="tablo.html">
+                        <i class="bi bi-table mr-2"></i>Kadın Cinayetleri Tablosu
+                    </a>
+                    <a class="dropdown-item" href="iletisim.html">
+                        <i class="bi bi-envelope mr-2"></i>İletişim
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="kayit.html">
+                        <i class="bi bi-person-plus mr-2"></i>Kayıt Ol
+                    </a>
+                    <a class="dropdown-item" href="giris.html">
+                        <i class="bi bi-box-arrow-in-right mr-2"></i>Giriş Yap
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <form class="form-inline ml-auto">
+                <input class="form-control mr-sm-2" type="search" placeholder="Ara..." aria-label="Search">
+                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Ara</button>
+            </form>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        <h2 class="text-center mb-4">Kayıt Ol</h2>
+        <p class="text-center text-muted mb-5">Mor Kampüs'e üye olarak, kadına yönelik şiddete karşı farkındalık ve dayanışma hareketine katılabilirsiniz.</p>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="kayitForm" class="needs-validation" novalidate>
+                            <div class="form-group">
+                                <label for="ad">Ad</label>
+                                <input type="text" class="form-control" id="ad" required>
+                                <div class="invalid-feedback">Lütfen adınızı giriniz.</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="soyad">Soyad</label>
+                                <input type="text" class="form-control" id="soyad" required>
+                                <div class="invalid-feedback">Lütfen soyadınızı giriniz.</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">E-posta</label>
+                                <input type="email" class="form-control" id="email" required>
+                                <div class="invalid-feedback">Lütfen geçerli bir e-posta adresi giriniz.</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="sifre">Şifre</label>
+                                <input type="password" class="form-control" id="sifre" required>
+                                <div class="invalid-feedback">Lütfen şifrenizi giriniz.</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="sifre_tekrar">Şifre (Tekrar)</label>
+                                <input type="password" class="form-control" id="sifre_tekrar" required>
+                                <div class="invalid-feedback">Lütfen şifrenizi tekrar giriniz.</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="universite">Üniversite</label>
+                                <input type="text" class="form-control" id="universite" required>
+                                <div class="invalid-feedback">Lütfen üniversitenizi giriniz.</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="bolum">Bölüm</label>
+                                <input type="text" class="form-control" id="bolum" required>
+                                <div class="invalid-feedback">Lütfen bölümünüzü giriniz.</div>
+                            </div>
+                            <div class="text-center mb-3">
+                                <p class="mb-0">Zaten hesabınız var mı? <a href="giris.html">Giriş Yap</a></p>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Kayıt Ol</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer mt-5 py-3 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Mor Kampüs</h5>
+                    <p class="text-muted">Kadına yönelik şiddete karşı toplumsal farkındalık oluşturmayı amaçlayan dijital bir bilgi ve bilinçlendirme platformu.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Hızlı Bağlantılar</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="hakkimda.html">Hakkımızda</a></li>
+                        <li><a href="tablo.html">Kadın Cinayetleri Tablosu</a></li>
+                        <li><a href="iletisim.html">İletişim</a></li>
+                        <li><a href="kayit.html">Kayıt Ol</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>İletişim</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="mailto:info@morkampus.org">info@morkampus.org</a></li>
+                        <li>
+                            <a href="https://instagram.com" target="_blank"><i class="bi bi-instagram"></i></a>
+                            <a href="https://twitter.com" target="_blank"><i class="bi bi-twitter"></i></a>
+                            <a href="https://facebook.com" target="_blank"><i class="bi bi-facebook"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="text-muted">&copy; 2025 Mor Kampüs. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../assets/js/main.js"></script>
+    <script>
+        document.getElementById('kayitForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const ad = document.getElementById('ad').value;
+            const soyad = document.getElementById('soyad').value;
+            const email = document.getElementById('email').value;
+            const sifre = document.getElementById('sifre').value;
+            const sifreTekrar = document.getElementById('sifre_tekrar').value;
+            const universite = document.getElementById('universite').value;
+            const bolum = document.getElementById('bolum').value;
+            
+            if (!ad || !soyad || !email || !sifre || !sifreTekrar || !universite || !bolum) {
+                Swal.fire({
+                    title: "Hata!",
+                    text: "Lütfen tüm alanları doldurunuz.",
+                    icon: "error",
+                    confirmButtonText: "Tamam"
+                });
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                Swal.fire({
+                    title: "Hata!",
+                    text: "Lütfen geçerli bir e-posta adresi giriniz.",
+                    icon: "error",
+                    confirmButtonText: "Tamam"
+                });
+                return;
+            }
+
+            if (sifre !== sifreTekrar) {
+                Swal.fire({
+                    title: "Hata!",
+                    text: "Şifreler eşleşmiyor!",
+                    icon: "error",
+                    confirmButtonText: "Tamam"
+                });
+                return;
+            }
+
+            if (sifre.length < 6) {
+                Swal.fire({
+                    title: "Hata!",
+                    text: "Şifre en az 6 karakter olmalıdır!",
+                    icon: "error",
+                    confirmButtonText: "Tamam"
+                });
+                return;
+            }
+
+            Swal.fire({
+                title: "Kayıt Başarılı!",
+                text: "Mor Kampüs'e hoş geldiniz!",
+                icon: "success",
+                confirmButtonText: "Tamam"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "anasayfa.html";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

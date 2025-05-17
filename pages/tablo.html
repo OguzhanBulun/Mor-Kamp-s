@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mor Kampüs – Kadın Cinayetleri Tablosu</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.12.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/map/js/turkey.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap4.min.css">
+    <style>
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 250px;
+            background-color: #410a5d;
+            padding-top: 20px;
+            z-index: 1000;
+        }
+        .sidebar .nav-link {
+            color: white;
+            padding: 10px 20px;
+        }
+        .sidebar .nav-link:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        .sidebar .dropdown-menu {
+            background-color: #410a5d;
+            border: none;
+        }
+        .sidebar .dropdown-item {
+            color: white;
+        }
+        .sidebar .dropdown-item:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        main {
+            margin-left: 250px;
+        }
+        .navbar {
+            margin-left: 250px;
+        }
+        .footer {
+            margin-left: 250px;
+        }
+        .chart-container {
+            height: 400px;
+            margin-bottom: 2rem;
+        }
+        .chart-title {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #410a5d;
+            font-weight: bold;
+        }
+        .dataTables_wrapper .dataTables_length select {
+            width: 60px;
+            display: inline-block;
+        }
+        .table th {
+            background-color: #410a5d !important;
+            color: white !important;
+        }
+        .table-hover tbody tr:hover {
+            background-color: rgba(65, 10, 93, 0.1);
+        }
+        #ilGrafik {
+            min-height: 500px;
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="text-center mb-4">
+            <img src="../assets/images/logo.png" width="50" height="50" alt="Mor Kampüs Logo">
+            <h4 class="text-white mt-2">MORBİS</h4>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="anasayfa.html">
+                    <i class="bi bi-house-door mr-2"></i>Ana Sayfa
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="hakkimda.html">
+                    <i class="bi bi-info-circle mr-2"></i>Hakkımızda
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                    <i class="bi bi-link-45deg mr-2"></i>Bağlantılar
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="tablo.html">
+                        <i class="bi bi-table mr-2"></i>Kadın Cinayetleri Tablosu
+                    </a>
+                    <a class="dropdown-item" href="iletisim.html">
+                        <i class="bi bi-envelope mr-2"></i>İletişim
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="kayit.html">
+                        <i class="bi bi-person-plus mr-2"></i>Kayıt Ol
+                    </a>
+                    <a class="dropdown-item" href="giris.html">
+                        <i class="bi bi-person-plus mr-2"></i>Giriş Yap
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <form class="form-inline ml-auto">
+                <input class="form-control mr-sm-2" type="search" placeholder="Ara..." aria-label="Search">
+                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Ara</button>
+            </form>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        <h2 class="text-center mb-4">Kadın Cinayetleri İstatistikleri</h2>
+        <p class="text-center text-muted mb-5">
+            Türkiye'de yıllara göre kadın cinayetleri verileri ve istatistiksel analizler.
+        </p>
+
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <h4 class="chart-title">Yıllara Göre Kadın Cinayetleri</h4>
+                <div id="yillikGrafik" class="chart-container"></div>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <h4 class="chart-title">Fail Türlerine Göre Dağılım</h4>
+                <div id="failGrafik" class="chart-container"></div>
+            </div>
+            <div class="col-md-6">
+                <h4 class="chart-title">Yaş Aralıklarına Göre Dağılım</h4>
+                <div id="yasGrafik" class="chart-container"></div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">Kadın Cinayetleri Verileri</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="cinayetTablosu" class="table table-bordered table-hover" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Tarih</th>
+                                            <th>İsim</th>
+                                            <th>Yaş</th>
+                                            <th>İl</th>
+                                            <th>Fail</th>
+                                            <th>Fail İlişkisi</th>
+                                            <th>Ölüm Nedeni</th>
+                                            <th>Kaynak</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer mt-5 py-3 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Mor Kampüs</h5>
+                    <p class="text-muted">
+                        Kadına yönelik şiddete karşı toplumsal farkındalık oluşturmayı amaçlayan dijital bir bilgi ve bilinçlendirme platformu.
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Hızlı Bağlantılar</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="hakkimda.html">Hakkımızda</a></li>
+                        <li><a href="tablo.html">Kadın Cinayetleri Tablosu</a></li>
+                        <li><a href="iletisim.html">İletişim</a></li>
+                        <li><a href="kayit.html">Kayıt Ol</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>İletişim</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="mailto:info@morkampus.org">info@morkampus.org</a></li>
+                        <li>
+                            <a href="https://instagram.com" target="_blank"><i class="bi bi-instagram"></i></a>
+                            <a href="https://twitter.com" target="_blank"><i class="bi bi-twitter"></i></a>
+                            <a href="https://facebook.com" target="_blank"><i class="bi bi-facebook"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="text-muted">&copy; 2025 Mor Kampüs. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/cinayetVerileri.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        const yillikChart = echarts.init(document.getElementById('yillikGrafik'));
+        const yillikOption = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            legend: {
+                data: ['Kadın Cinayetleri']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: Object.keys(cinayetVerileri.istatistikler.yillikVeriler),
+                axisLabel: {
+                    color: '#410a5d'
+                }
+            },
+            yAxis: {
+                type: 'value',
+                name: 'Cinayet Sayısı',
+                axisLabel: {
+                    color: '#410a5d'
+                }
+            },
+            series: [{
+                name: 'Kadın Cinayetleri',
+                type: 'line',
+                smooth: true,
+                data: Object.values(cinayetVerileri.istatistikler.yillikVeriler),
+                itemStyle: {
+                    color: '#81248f'
+                },
+                areaStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: 'rgba(129, 36, 143, 0.5)'
+                    }, {
+                        offset: 1,
+                        color: 'rgba(129, 36, 143, 0.1)'
+                    }])
+                }
+            }]
+        };
+        yillikChart.setOption(yillikOption);
+
+        const failChart = echarts.init(document.getElementById('failGrafik'));
+        const failOption = {
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b}: {c} ({d}%)'
+            },
+            legend: {
+                orient: 'vertical',
+                left: 10,
+                data: cinayetVerileri.istatistikler.failVeriler.map(item => item.name)
+            },
+            series: [{
+                name: 'Fail Türü',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                itemStyle: {
+                    borderRadius: 10,
+                    borderColor: '#fff',
+                    borderWidth: 2
+                },
+                label: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: '20',
+                        fontWeight: 'bold'
+                    }
+                },
+                labelLine: {
+                    show: false
+                },
+                data: cinayetVerileri.istatistikler.failVeriler
+            }]
+        };
+        failChart.setOption(failOption);
+
+        const yasChart = echarts.init(document.getElementById('yasGrafik'));
+        const yasOption = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['18-24', '25-34', '35-44', '45-54', '55+'],
+                axisLabel: {
+                    color: '#410a5d'
+                }
+            },
+            yAxis: {
+                type: 'value',
+                name: 'Cinayet Sayısı',
+                axisLabel: {
+                    color: '#410a5d'
+                }
+            },
+            series: [{
+                name: 'Yaş Aralığı',
+                type: 'bar',
+                data: cinayetVerileri.istatistikler.yasVeriler,
+                itemStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                        { offset: 0, color: '#81248f' },
+                        { offset: 1, color: '#410a5d' }
+                    ])
+                }
+            }]
+        };
+        yasChart.setOption(yasOption);
+
+        window.addEventListener('resize', function() {
+            yillikChart.resize();
+            failChart.resize();
+            yasChart.resize();
+            ilChart.resize();
+        });
+
+        const cinayetTablosu = $('#cinayetTablosu').DataTable({
+            responsive: true,
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/tr.json'
+            },
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'copy',
+                    text: '<i class="fas fa-copy"></i> Kopyala',
+                    className: 'btn btn-sm btn-primary',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    }
+                },
+                {
+                    extend: 'excel',
+                    text: '<i class="fas fa-file-excel"></i> Excel',
+                    className: 'btn btn-sm btn-success',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    text: '<i class="fas fa-file-pdf"></i> PDF',
+                    className: 'btn btn-sm btn-danger',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    }
+                },
+                {
+                    extend: 'print',
+                    text: '<i class="fas fa-print"></i> Yazdır',
+                    className: 'btn btn-sm btn-info',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    }
+                }
+            ],
+            order: [[0, 'desc']],
+            pageLength: 10,
+            lengthMenu: [ [5, 10, 25, 50, -1], [5, 10, 25, 50, "Tümü"] ],
+            data: cinayetVerileri.veriler,
+            columns: [
+                { 
+                    data: 'tarih',
+                    render: function(data) {
+                        return new Date(data).toLocaleDateString('tr-TR');
+                    }
+                },
+                { data: 'isim' },
+                { data: 'yas' },
+                { data: 'il' },
+                { data: 'fail' },
+                { data: 'failIliski' },
+                { data: 'olumNedeni' },
+                { 
+                    data: 'kaynak',
+                    render: function(data) {
+                        return `<a href="${data}" target="_blank" class="btn btn-sm btn-link">Kaynak</a>`;
+                    }
+                }
+            ]
+        });
+    });
+    </script>
+</body>
+</html>
